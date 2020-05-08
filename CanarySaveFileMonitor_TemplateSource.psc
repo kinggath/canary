@@ -20,7 +20,7 @@ endEvent
 Function CheckForCanary()
     if(Game.IsPluginInstalled("CanarySaveFileMonitor.esl"))
         Var[] kArgs = new Var[2]
-        kArgs[0] = Self
+        kArgs[0] = Self as Quest
         kArgs[1] = sThisFullScriptName
         
         Utility.CallGlobalFunction("Canary:API", "MonitorForDataLoss", kArgs)
