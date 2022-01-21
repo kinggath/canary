@@ -236,52 +236,58 @@ EndFunction
 
 
 Int Function FindMonitoredQuestIndex(Quest akRequester)
-	int iIndex = -1
-	if(QuestsToCheck01 != None)
-		iIndex = QuestsToCheck01.FindStruct("QuestToUse", akRequester)
-		
-		if(iIndex < 0)
-			if(QuestsToCheck02 != None)
-				iIndex = QuestsToCheck02.FindStruct("QuestToUse", akRequester)
-				
-				if(iIndex < 0)
-					if(QuestsToCheck03 != None)
-						iIndex = QuestsToCheck03.FindStruct("QuestToUse", akRequester)
-						
-						if(iIndex < 0)
-							if(QuestsToCheck04 != None)
-								iIndex = QuestsToCheck04.FindStruct("QuestToUse", akRequester)
-								
-								if(iIndex < 0)
-									if(QuestsToCheck05 != None)
-										iIndex = QuestsToCheck05.FindStruct("QuestToUse", akRequester)
-										
-										if(iIndex < 0)
-											if(QuestsToCheck06 != None)
-												iIndex = QuestsToCheck06.FindStruct("QuestToUse", akRequester)
-												
-												if(iIndex < 0)
-													if(QuestsToCheck07 != None)
-														iIndex = QuestsToCheck07.FindStruct("QuestToUse", akRequester)
-														
-														if(iIndex < 0)
-															if(QuestsToCheck08 != None)
-																iIndex = QuestsToCheck08.FindStruct("QuestToUse", akRequester)
-															endif
-														endif
-													endif
-												endif
-											endif
-										endif
-									endif
-								endif
-							endif
-						endif
-					endif
-				endif
-			endif
-		endif
+	if ( akRequester == none )
+		return -1
 	endif
 	
-	return iIndex
+	int iIndex = GetQuestToCheckIndex(QuestsToCheck01, akRequester)
+	if ( iIndex > -1 )
+		return iIndex
+	endif
+	
+	iIndex = GetQuestToCheckIndex(QuestsToCheck02, akRequester)
+	if ( iIndex > -1 )
+		return iIndex + 128
+	endif
+	
+	iIndex = GetQuestToCheckIndex(QuestsToCheck03, akRequester)
+	if ( iIndex > -1 )
+		return iIndex + 256
+	endif
+	
+	iIndex = GetQuestToCheckIndex(QuestsToCheck04, akRequester)
+	if ( iIndex > -1 )
+		return iIndex + 384
+	endif
+	
+	iIndex = GetQuestToCheckIndex(QuestsToCheck05, akRequester)
+	if ( iIndex > -1 )
+		return iIndex + 512
+	endif
+	
+	iIndex = GetQuestToCheckIndex(QuestsToCheck06, akRequester)
+	if ( iIndex > -1 )
+		return iIndex + 640
+	endif
+	
+	iIndex = GetQuestToCheckIndex(QuestsToCheck07, akRequester)
+	if ( iIndex > -1 )
+		return iIndex + 768
+	endif
+	
+	iIndex = GetQuestToCheckIndex(QuestsToCheck08, akRequester)
+	if ( iIndex > -1 )
+		return iIndex + 896
+	endif
+	
+	; all checks failed
+	return -1
+EndFunction
+
+int Function GetQuestToCheckIndex(CustomScriptQuest[] aCheckMe, Quest akRequester)
+	if ( aCheckMe == none || aCheckMe.Length < 1 )
+		return -1
+	endif
+	
+	return aCheckMe.FindStruct("QuestToUse", akRequester)
 EndFunction
